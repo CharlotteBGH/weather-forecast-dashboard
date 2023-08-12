@@ -1,35 +1,41 @@
 // Add the JSON ready thing
-//Add the day.js into the top div to pull through the date
+$(document).ready(function () {
+  //Add the day.js into the top div to pull through the date
 
-// Event listener for search button
-$("#search-button").on("click", function () {
-  // Store API
+  var chosenCity = $("#search-input");
+  var displayDateHeader = $("#datedisplay");
+  var searchForm = $("search-form");
+  var fiveDayForecast = $("forecast");
+  var city = chosenCity.value;
+  var searchedCities = [];
 
-  var queryURL =
-    "https://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid=c6e073c97cdefe7c2943541b6a576268";
+  // Display the current day's date
+  function displayDate() {
+    var todayDate = moment().format("ddd MM/DD/YYYY");
+    displayDateHeader.text(todayDate);
+  }
+  displayDate();
 
-  fetch(queryURL).then(function (response) {
-    // calling response.json() to extract json data from the response object
-    return response.json();
+  // Event listener for search button
+
+  $("#search-button").on("click", function () {
+    // Store API
+    var queryURL = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=c6e073c97cdefe7c2943541b6a576268`;
+
+    //var queryURL = `https://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid=c6e073c97cdefe7c2943541b6a576268`;
+
+    //event.preventDefault
+
+    fetch(queryURL)
+      .then(function (response) {
+        return response.json();
+      })
+      .then(function (data) {
+        var cityButton = $("<button>");
+        var cityTitle = $("<button>").text(data.city);
+
+        cityButton.append(city);
+        $(".input-group-append").append(cityButton);
+      });
   });
-  console.log(queryURL);
-
-  //.then(function (data) {
-  // Saving the XXXX property
-  //var XXXXX = XXXXXX;
-
-  // Create and store tag
-  //var XXXX = $("<XXX>");
-
-  // Set src attribute
-
-  //XXXX.attr("src", XXXX);
-
-  // Prepend to the div
-  //$("#XXX").prepend(XXXX);
-  //});
-  //});
-
-  // Add a for loop
-  // Append to certain divs
 });

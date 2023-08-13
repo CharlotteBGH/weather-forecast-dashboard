@@ -6,6 +6,7 @@ $(document).ready(function () {
   var todayWeather = $("#today");
   var searchForm = $("#search-form");
   var fiveDayForecast = $("#forecast");
+
   var searchedCities = [];
 
   // Display the current day's date
@@ -53,11 +54,19 @@ $(document).ready(function () {
             ) {
               const element = forecastData.list[index];
               console.log(element);
+
+              var iconCode = element.weather[0].icon;
+              var iconURL =
+                "https://openweathermap.org/img/w/" + iconCode + ".png";
+
               var dashboard = `<section id="today" class="mt-3" role="region" aria-live="polite">
-                  <h2>${element.dt_txt}</h2>
-                  <li>Temperature: ${element.main.temp}°C</li>
+      
+              <h2>${city + " " + element.dt_txt}</h2>
+              <ul>
+              <li><img src = ${iconURL}></li>
+              <li>Temperature: ${element.main.temp}°C</li>
                   <li>Wind: ${element.wind.speed} mph</li>
-                  <li>Humidity: ${element.main.humidity}%</li>
+                  <li>Humidity: ${element.main.humidity}%</li></ul>
                 </section>`;
               todayWeather.append(dashboard);
             }
@@ -66,16 +75,18 @@ $(document).ready(function () {
             for (let index = 8; index < forecastData.list.length; index += 7) {
               const element = forecastData.list[index];
               console.log(element);
+              var iconCode = element.weather[0].icon;
+              var iconURL =
+                "https://openweathermap.org/img/w/" + iconCode + ".png";
               var card = `<ul class="col-2 day">
               <li>Date: ${element.dt_txt}</li>
-              <li>Icon</li>
+              <li><img src = ${iconURL}></li>
               <li>Temperature: ${element.main.temp}°C</li>
               <li>Wind: ${element.wind.speed} mph</li>
               <li>Humidity: ${element.main.humidity}%</li>
             </ul>`;
               fiveDayForecast.append(card);
             }
-            element.dt_txt.format("DD/MM/YYYY");
             // Reformat date format
 
             // var cityButton = $("#search-button");

@@ -9,13 +9,6 @@ $(document).ready(function () {
 
   var searchedCities = [];
 
-  // Display the current day's date
-  //function displayDate() {
-  //var todayDate = moment().format("DD/MM/YYYY");
-  //displayDateHeader.text(todayDate);
-  //}
-  //displayDate();
-
   // Event listener for search button
 
   $("#search-button").on("click", function (event) {
@@ -64,7 +57,7 @@ $(document).ready(function () {
               <h2>${city + " " + element.dt_txt}</h2>
               <ul>
               <li><img src = ${iconURL}></li>
-              <li>Temperature: ${element.main.temp}°C</li>
+              <li>Temp: ${element.main.temp}°C</li>
                   <li>Wind: ${element.wind.speed} mph</li>
                   <li>Humidity: ${element.main.humidity}%</li></ul>
                 </section>`;
@@ -79,9 +72,9 @@ $(document).ready(function () {
               var iconURL =
                 "https://openweathermap.org/img/w/" + iconCode + ".png";
               var card = `<ul class="col-2 day">
-              <li>Date: ${element.dt_txt}</li>
+              <li>${element.dt_txt}</li>
               <li><img src = ${iconURL}></li>
-              <li>Temperature: ${element.main.temp}°C</li>
+              <li>Temp: ${element.main.temp}°C</li>
               <li>Wind: ${element.wind.speed} mph</li>
               <li>Humidity: ${element.main.humidity}%</li>
             </ul>`;
@@ -89,11 +82,18 @@ $(document).ready(function () {
             }
             // Reformat date format
 
-            // var cityButton = $("#search-button");
-            // var cityTitle = $("<btn search-button>").text(data.city);
+            //Make searched cities appear as buttons
 
-            // cityButton.append(city);
-            // $(".list-group").append(cityTitle);
+            var cityButton = $(".list-group");
+            var cityTitle = $("<btn search-button>").text(data.city);
+
+            //cityButton.append(city);
+            //$(".list-group").append(cityTitle);
+
+            var searchHistory = `<class="btn search-button">
+            <button>${city}</button>
+            </div>`;
+            cityButton.append(searchHistory);
           });
       });
   });

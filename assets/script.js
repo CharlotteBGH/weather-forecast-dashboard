@@ -7,18 +7,40 @@ $(document).ready(function () {
   var searchForm = $("#search-form");
   var fiveDayForecast = $("#forecast");
 
-  var searchedCities = [];
+  var searchedCities = "";
+
+  (function () {
+    var cityHistory = JSON.parse(localStorage.getItem("cityHistory"));
+    if (!cityHistory) {
+      localStorage.setItem("cityHistory", JSON.stringify([]));
+    }
+  })();
+
+  var saveToLs = function (cityName) {
+    var cityHistory = JSON.parse(localStorage.getItem("cityHistory"));
+    cityHistory.push(cityName);
+    localStorage.setItem("cityHistory", JSON.stringify(cityHistory));
+    displaySearchHistory(cityHistory);
+  };
+
+  var displaySearchHistory = function (arrOfCities) {
+    arrOfCities.forEach(function () {
+      console.log(arrOfCities);
+      // create element and append to hsitory list element in html
+    });
+  };
 
   // Event listener for search button
 
-  $("#search-button").on("click", function (event) {
+  var getWeatherData = function (event) {
     event.preventDefault();
 
     var city = chosenCity.val();
+    saveToLs(city);
 
     // Store API
     var getCityDetails = `https://api.openweathermap.org/data/2.5/weather?&q=${city}&appid=c6e073c97cdefe7c2943541b6a576268`;
-    //event.preventDefault
+
     //.val()
     //.trim()
 
@@ -53,17 +75,17 @@ $(document).ready(function () {
                 "https://openweathermap.org/img/w/" + iconCode + ".png";
 
               var dashboard = `<section id="today" class="mt-3" role="region" aria-live="polite">
-      
-              <h2>${city + " " + element.dt_txt}</h2>
-              <ul>
-              <li><img src = ${iconURL}></li>
-              <li>Temp: ${element.main.temp}°C</li>
-                  <li>Wind: ${element.wind.speed} mph</li>
-                  <li>Humidity: ${element.main.humidity}%</li></ul>
-                </section>`;
+    
+            <h2>${city + " " + element.dt_txt}</h2>
+            <ul>
+            <li><img src = ${iconURL}></li>
+            <li>Temp: ${element.main.temp}°C</li>
+                <li>Wind: ${element.wind.speed} mph</li>
+                <li>Humidity: ${element.main.humidity}%</li></ul>
+              </section>`;
               todayWeather.append(dashboard);
             }
-
+            fiveDayForecast.empty();
             // 5 day forecast cards
             for (let index = 8; index < forecastData.list.length; index += 7) {
               const element = forecastData.list[index];
@@ -72,29 +94,41 @@ $(document).ready(function () {
               var iconURL =
                 "https://openweathermap.org/img/w/" + iconCode + ".png";
               var card = `<ul class="col-2 day">
-              <li>${element.dt_txt}</li>
-              <li><img src = ${iconURL}></li>
-              <li>Temp: ${element.main.temp}°C</li>
-              <li>Wind: ${element.wind.speed} mph</li>
-              <li>Humidity: ${element.main.humidity}%</li>
-            </ul>`;
+            <li>${element.dt_txt}</li>
+            <li><img src = ${iconURL}></li>
+            <li>Temp: ${element.main.temp}°C</li>
+            <li>Wind: ${element.wind.speed} mph</li>
+            <li>Humidity: ${element.main.humidity}%</li>
+          </ul>`;
               fiveDayForecast.append(card);
             }
             // Reformat date format
 
-            //Make searched cities appear as buttons
+            // Add previous searches as buttons under the search form
+            // function createSearchHistory() {
+            //   var addCity = `<div class="list-group" id="history"></div>
+            // <button>${city}</button>`;
+            //   $("#history").append(addCity);
+            // }
+            // createSearchHistory();
 
-            var cityButton = $(".list-group");
-            var cityTitle = $("<btn search-button>").text(data.city);
+            // Make the past searches appear when clicking on the buttons
 
-            //cityButton.append(city);
-            //$(".list-group").append(cityTitle);
-
-            var searchHistory = `<class="btn search-button">
-            <button>${city}</button>
-            </div>`;
-            cityButton.append(searchHistory);
+            // Make the last city display
+            function displayLastCity() {
+              $("ul").empty();
+              var storedCity = JSON.parse(localStorage.getItem(cityname));
+              for (i = 0; i < storedCity.length; i++) {
+                createSearchHistory(storedCity[i]);
+              }
+              searchedCities = storedCity[i - 1];
+              fetch(getCityDetails);
+            }
           });
       });
-  });
+  };
+
+  $("#search-button").on("click", getWeatherData);
 });
+
+$(window).on("load", displayLastCity);

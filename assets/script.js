@@ -16,7 +16,7 @@ $(document).ready(function () {
     }
   })();
 
-  var saveToLs = function (cityName) {
+  var saveCity = function (cityName) {
     var cityHistory = JSON.parse(localStorage.getItem("cityHistory"));
     cityHistory.push(cityName);
     localStorage.setItem("cityHistory", JSON.stringify(cityHistory));
@@ -36,7 +36,7 @@ $(document).ready(function () {
     event.preventDefault();
 
     var city = chosenCity.val();
-    saveToLs(city);
+    saveCity(city);
 
     // Store API
     var getCityDetails = `https://api.openweathermap.org/data/2.5/weather?&q=${city}&appid=c6e073c97cdefe7c2943541b6a576268`;

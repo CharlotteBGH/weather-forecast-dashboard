@@ -1,13 +1,13 @@
 // Add the JSON ready thing
 $(document).ready(function () {
-  //Add the day.js into the top div to pull through the date
-
+  // Add DOM variables
   var chosenCity = $("#search-input");
   var todayWeather = $("#today");
-  var searchForm = $("#search-form");
   var fiveDayForecast = $("#forecast");
 
-  var searchedCities = "";
+  //var searchedCities = "";
+
+  // Add function to save to and retrieve from local storage
 
   (function () {
     var cityHistory = JSON.parse(localStorage.getItem("cityHistory"));
@@ -30,8 +30,6 @@ $(document).ready(function () {
     });
   };
 
-  // Event listener for search button
-
   var getWeatherData = function (event) {
     event.preventDefault();
 
@@ -41,9 +39,7 @@ $(document).ready(function () {
     // Store API
     var getCityDetails = `https://api.openweathermap.org/data/2.5/weather?&q=${city}&appid=c6e073c97cdefe7c2943541b6a576268`;
 
-    //.val()
-    //.trim()
-
+    //Fetch details from API
     fetch(getCityDetails)
       .then(function (response) {
         return response.json();
@@ -61,7 +57,7 @@ $(document).ready(function () {
           .then(function (forecastData) {
             console.log(forecastData);
 
-            // Today's date and weather dashboard
+            // Pull through data for today's date and weather dashboard
             for (
               let index = 0;
               index < forecastData.list.length;
@@ -86,7 +82,9 @@ $(document).ready(function () {
               todayWeather.append(dashboard);
             }
             fiveDayForecast.empty();
-            // 5 day forecast cards
+
+            // Pull through data for 5-day forecast cards
+
             for (let index = 8; index < forecastData.list.length; index += 7) {
               const element = forecastData.list[index];
               console.log(element);
@@ -102,9 +100,12 @@ $(document).ready(function () {
           </ul>`;
               fiveDayForecast.append(card);
             }
+
+            //Still to do
             // Reformat date format
 
             // Add previous searches as buttons under the search form
+
             // function createSearchHistory() {
             //   var addCity = `<div class="list-group" id="history"></div>
             // <button>${city}</button>`;
@@ -114,7 +115,7 @@ $(document).ready(function () {
 
             // Make the past searches appear when clicking on the buttons
 
-            // Make the last city display
+            // Make the last city display. Can't remember what I did here.
             function displayLastCity() {
               $("ul").empty();
               var storedCity = JSON.parse(localStorage.getItem(cityname));

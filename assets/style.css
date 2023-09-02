@@ -13,10 +13,11 @@ body {
 }
 
 #today {
-  background-color: white;
+  background-color: #eaf3d9;
   padding: 30px;
-  border-style: solid;
+  border-style: none;
   border-width: 2px;
+  padding: 20px;
 }
 
 ul {

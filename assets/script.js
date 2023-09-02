@@ -31,6 +31,7 @@ $(document).ready(function () {
   };
 
   var getWeatherData = function (event) {
+    todayWeather.empty();
     event.preventDefault();
 
     var city = chosenCity.val();
@@ -71,9 +72,8 @@ $(document).ready(function () {
                 "https://openweathermap.org/img/w/" + iconCode + ".png";
 
               var dashboard = `<section id="today" class="mt-3" role="region" aria-live="polite">
-    
-            <h2>${city + " " + element.dt_txt}</h2>
             <ul>
+            <h2>${city + " " + element.dt_txt}</h2>
             <li><img src = ${iconURL}></li>
             <li>Temp: ${element.main.temp}°C</li>
                 <li>Wind: ${element.wind.speed} mph</li>

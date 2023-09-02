@@ -5,8 +5,6 @@ $(document).ready(function () {
   var todayWeather = $("#today");
   var fiveDayForecast = $("#forecast");
 
-  //var searchedCities = "";
-
   // Add function to save to and retrieve from local storage
 
   (function () {
@@ -23,10 +21,10 @@ $(document).ready(function () {
     displaySearchHistory(cityHistory);
   };
 
+  // Append button list to history element in HTML
   var displaySearchHistory = function (arrOfCities) {
     arrOfCities.forEach(function () {
       console.log(arrOfCities);
-      // create element and append to hsitory list element in html
     });
   };
 
@@ -106,30 +104,27 @@ $(document).ready(function () {
 
             // Add previous searches as buttons under the search form
 
-            // function createSearchHistory() {
-            //   var addCity = `<div class="list-group" id="history"></div>
-            // <button>${city}</button>`;
-            //   $("#history").append(addCity);
-            // }
-            // createSearchHistory();
+            function createSearchHistory() {
+              var addCity = `<div class="list-group" id="history"></div><button>${city}</button>`;
+              $("#history").append(addCity);
+            }
+            createSearchHistory();
 
             // Make the past searches appear when clicking on the buttons
 
             // Make the last city display. Can't remember what I did here.
-            function displayLastCity() {
-              $("ul").empty();
-              var storedCity = JSON.parse(localStorage.getItem(cityname));
-              for (i = 0; i < storedCity.length; i++) {
-                createSearchHistory(storedCity[i]);
-              }
-              searchedCities = storedCity[i - 1];
-              fetch(getCityDetails);
-            }
+            //function displayLastCity() {
+            //$("ul").empty();
+            //var storedCity = JSON.parse(localStorage.getItem(cityname));
+            //for (i = 0; i < storedCity.length; i++) {
+            //createSearchHistory(storedCity[i]);
+            //}
+            //searchedCities = storedCity[i - 1];
+            //fetch(getCityDetails);
+            //}
           });
       });
   };
 
   $("#search-button").on("click", getWeatherData);
 });
-
-$(window).on("load", displayLastCity);
